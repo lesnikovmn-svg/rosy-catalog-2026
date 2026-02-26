@@ -15,7 +15,7 @@ function renderProduct(p, stockById) {
   img.alt = p.name;
   img.onerror = () => {
     img.onerror = null;
-    img.src = "./images/placeholder.jpg";
+    img.src = "./images/placeholder.svg";
   };
 
   const desc = document.getElementById("productDesc");

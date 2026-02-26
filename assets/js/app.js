@@ -5,6 +5,7 @@ import { buildTelegramUrl, buildWhatsAppUrl, formatRub, updateCartBadge } from "
 const state = {
   products: [],
   stockById: {},
+  source: "unknown",
 };
 
 function normalizeText(v) {
@@ -84,7 +85,7 @@ function render(products) {
     img.className = "img-fluid";
     img.onerror = () => {
       img.onerror = null;
-      img.src = "./images/placeholder.jpg";
+      img.src = "./images/placeholder.svg";
     };
     fig.appendChild(img);
 
@@ -169,7 +170,8 @@ function render(products) {
   }
 
   const status = document.getElementById("status");
-  status.textContent = products.length ? `Найдено: ${products.length}` : "Ничего не найдено";
+  const suffix = state.source === "sample" ? " (демо: нет связи с таблицей)" : "";
+  status.textContent = products.length ? `Найдено: ${products.length}${suffix}` : `Ничего не найдено${suffix}`;
 }
 
 function onChange() {
@@ -185,6 +187,7 @@ async function init() {
   try {
     status.textContent = "Загрузка каталога…";
     const data = await fetchCatalog();
+    state.source = data.__source || "unknown";
     state.products = Array.isArray(data.products) ? data.products : [];
     state.stockById = data.stockById || {};
 

@@ -5,7 +5,7 @@ async function loadLocalSample() {
   const res = await fetch("./data/products.sample.json", { cache: "no-store" });
   if (!res.ok) throw new Error("Не удалось загрузить sample данные");
   const products = await res.json();
-  return { products, stockById: {} };
+  return { products, stockById: {}, __source: "sample" };
 }
 
 export async function fetchCatalog() {
@@ -16,10 +16,17 @@ export async function fetchCatalog() {
 
   const url = `${APPS_SCRIPT_URL}?action=catalog&_ts=${Date.now()}`;
   try {
-    return await jsonp(url, { timeoutMs: 20000 });
+    const data = await jsonp(url, { timeoutMs: 45000 });
+    return { ...data, __source: "sheets" };
   } catch (e) {
-    if (USE_LOCAL_SAMPLE_DATA_WHEN_NO_API) return loadLocalSample();
-    throw e;
+    // Retry once (Apps Script can be slow on cold start).
+    try {
+      const data = await jsonp(url, { timeoutMs: 45000 });
+      return { ...data, __source: "sheets" };
+    } catch (e2) {
+      if (USE_LOCAL_SAMPLE_DATA_WHEN_NO_API) return loadLocalSample();
+      throw e2;
+    }
   }
 }
 
