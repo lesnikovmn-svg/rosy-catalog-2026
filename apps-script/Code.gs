@@ -27,6 +27,7 @@ function setupSheets() {
     "id",
     "slug",
     "name",
+    "category",
     "description",
     "price_rub",
     "currency",
@@ -240,6 +241,7 @@ function normalizeProduct_(row) {
     id: safe_(row.id),
     slug: safe_(row.slug),
     name: safe_(row.name),
+    category: safe_(row.category),
     description: safe_(row.description),
     price_rub: toNumber_(row.price_rub),
     currency: safe_(row.currency || "RUB"),
@@ -287,11 +289,31 @@ function appendRowByHeaders_(sheet, obj) {
 function ensureSheet_(ss, name, headers) {
   var sheet = ss.getSheetByName(name);
   if (!sheet) sheet = ss.insertSheet(name);
-  if (sheet.getLastRow() === 0) {
+  ensureHeaders_(sheet, headers);
+  return sheet;
+}
+
+function ensureHeaders_(sheet, headers) {
+  var lastCol = sheet.getLastColumn();
+  var current = [];
+  if (sheet.getLastRow() >= 1 && lastCol > 0) {
+    current = sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(function (h) { return String(h).trim(); });
+  }
+  if (current.length === 0) {
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     sheet.setFrozenRows(1);
+    return;
   }
-  return sheet;
+
+  var missing = [];
+  for (var i = 0; i < headers.length; i++) {
+    if (current.indexOf(headers[i]) === -1) missing.push(headers[i]);
+  }
+
+  if (missing.length) {
+    sheet.getRange(1, current.length + 1, 1, missing.length).setValues([missing]);
+  }
+  sheet.setFrozenRows(1);
 }
 
 function indexStock_(stockSheet) {
