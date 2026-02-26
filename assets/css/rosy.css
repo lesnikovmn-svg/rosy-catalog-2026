@@ -1,5 +1,54 @@
 :root {
+  --phi: 1.618;
   --rosy-wa: #25d366;
+
+  /* Golden-ratio-ish scale (phi). */
+  --rosy-space-xs: 0.618rem;
+  --rosy-space-sm: 1rem;
+  --rosy-space-md: 1.618rem;
+  --rosy-space-lg: 2.618rem;
+
+  --rosy-font-sm: 0.95rem;
+  --rosy-font-md: 1rem;
+  --rosy-font-lg: 1.272rem; /* ~sqrt(phi) */
+  --rosy-font-xl: 1.618rem;
+}
+
+.navbar {
+  padding-top: var(--rosy-space-xs);
+  padding-bottom: var(--rosy-space-xs);
+}
+
+.navbar-brand {
+  font-size: var(--rosy-font-lg);
+}
+
+.navbar-brand i {
+  font-size: var(--rosy-font-xl);
+}
+
+.nav-item {
+  margin-right: var(--rosy-space-md);
+}
+
+.nav-link {
+  font-size: var(--rosy-font-md);
+  border-bottom-width: 3px;
+}
+
+.tm-hero {
+  min-height: 170px;
+}
+
+.tm-search-input {
+  width: min(360px, 74vw);
+  padding: 10px 14px;
+  font-size: var(--rosy-font-md);
+}
+
+.tm-search-btn {
+  width: 56px;
+  height: 46px;
 }
 
 .rosy-cta {
@@ -34,4 +83,3 @@
     min-width: 0;
   }
 }
-
