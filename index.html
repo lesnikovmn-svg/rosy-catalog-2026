@@ -1,85 +1,115 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог роз</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="container topbar__row">
-        <a class="brand" href="./index.html">Розы</a>
-        <nav class="nav">
-          <a href="./index.html" aria-current="page">Каталог</a>
-          <a href="./cart.html">Корзина <span id="cartCount" class="badge" hidden></span></a>
-        </nav>
-      </div>
-    </header>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="css/templatemo-style.css">
+</head>
+<body>
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
 
-    <main class="container">
-      <section class="hero">
-        <h1>Онлайн‑каталог роз</h1>
-        <p class="muted">
-          Поиск по сортам, фильтры по параметрам и быстрая корзина. Заказ отправляется в таблицу и на email.
-        </p>
-      </section>
-
-      <section class="panel">
-        <div class="filters">
-          <label class="field">
-            <span>Поиск</span>
-            <input id="q" type="search" placeholder="Например: Red Naomi" />
-          </label>
-
-          <label class="field">
-            <span>Цвет</span>
-            <select id="color">
-              <option value="">Любой</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Высота, см</span>
-            <div class="range">
-              <input id="hMin" type="number" inputmode="numeric" placeholder="от" min="0" />
-              <span class="muted">—</span>
-              <input id="hMax" type="number" inputmode="numeric" placeholder="до" min="0" />
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-seedling mr-2"></i>
+                ROS
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-4 position-relative" href="cart.html">
+                            Корзина
+                            <span id="cartCount" class="badge rounded-pill bg-danger" hidden></span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-          </label>
-
-          <label class="field">
-            <span>Тип цветения</span>
-            <select id="bloomType">
-              <option value="">Любой</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Сортировка</span>
-            <select id="sort">
-              <option value="popularity_desc">Популярные</option>
-              <option value="new_desc">Новинки</option>
-              <option value="price_asc">Цена ↑</option>
-              <option value="price_desc">Цена ↓</option>
-              <option value="name_asc">Название A‑Я</option>
-            </select>
-          </label>
         </div>
-      </section>
+    </nav>
 
-      <section class="grid" id="grid" aria-live="polite"></section>
+    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg">
+        <form class="d-flex tm-search-form" onsubmit="return false">
+            <input id="q" class="form-control tm-search-input" type="search" placeholder="Поиск по названию" aria-label="Search">
+            <button class="btn btn-outline-success tm-search-btn" type="button" aria-label="Search button">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
 
-      <p id="status" class="muted" role="status"></p>
-    </main>
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <div class="row mb-4">
+            <h2 class="col-12 tm-text-primary">Каталог роз</h2>
+        </div>
 
-    <footer class="footer">
-      <div class="container">
-        <span class="muted">© Каталог роз</span>
-      </div>
+        <div class="row mb-4 g-3">
+            <div class="col-12 col-md-3">
+                <label class="tm-text-primary mb-2 d-block" for="color">Цвет</label>
+                <select id="color" class="form-control rounded-0">
+                    <option value="">Любой</option>
+                </select>
+            </div>
+            <div class="col-6 col-md-2">
+                <label class="tm-text-primary mb-2 d-block" for="hMin">Высота от</label>
+                <input id="hMin" type="number" inputmode="numeric" min="0" class="form-control rounded-0" placeholder="см">
+            </div>
+            <div class="col-6 col-md-2">
+                <label class="tm-text-primary mb-2 d-block" for="hMax">Высота до</label>
+                <input id="hMax" type="number" inputmode="numeric" min="0" class="form-control rounded-0" placeholder="см">
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="tm-text-primary mb-2 d-block" for="bloomType">Тип цветения</label>
+                <select id="bloomType" class="form-control rounded-0">
+                    <option value="">Любой</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-2">
+                <label class="tm-text-primary mb-2 d-block" for="sort">Сортировка</label>
+                <select id="sort" class="form-control rounded-0">
+                    <option value="popularity_desc">Популярные</option>
+                    <option value="new_desc">Новинки</option>
+                    <option value="price_asc">Цена ↑</option>
+                    <option value="price_desc">Цена ↓</option>
+                    <option value="name_asc">Название A‑Я</option>
+                </select>
+            </div>
+        </div>
+
+        <p id="status" class="tm-text-gray" role="status"></p>
+
+        <div class="row tm-mb-90 tm-gallery" id="grid" aria-live="polite"></div>
+    </div>
+
+    <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
+        <div class="container-fluid tm-container-small">
+            <div class="row">
+                <div class="col-12 px-5 mb-3">
+                    Каталог саженцев роз на весну 2026
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <script src="js/plugins.js"></script>
+    <script>
+        $(window).on("load", function() {
+            $('body').addClass('loaded');
+        });
+    </script>
     <script type="module" src="assets/js/app.js"></script>
-  </body>
+</body>
 </html>
-

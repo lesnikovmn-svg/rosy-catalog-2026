@@ -13,12 +13,28 @@ function renderCart({ productsById, stockById }) {
   const items = readCart();
 
   if (!items.length) {
-    wrap.innerHTML = `<p class="muted">Корзина пуста.</p>`;
+    wrap.innerHTML = `<p class="tm-text-gray">Корзина пуста.</p>`;
     return { subtotal: 0, canCheckout: false };
   }
 
-  const lines = document.createElement("div");
-  lines.className = "table";
+  const tableWrap = document.createElement("div");
+  tableWrap.className = "table-responsive";
+
+  const table = document.createElement("table");
+  table.className = "table table-striped align-middle";
+
+  const thead = document.createElement("thead");
+  thead.innerHTML = `<tr>
+    <th>Товар</th>
+    <th class="text-end">Цена</th>
+    <th class="text-center">Кол-во</th>
+    <th class="text-end">Сумма</th>
+    <th class="text-end">Действия</th>
+  </tr>`;
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  table.appendChild(tbody);
 
   let subtotal = 0;
   let canCheckout = true;
@@ -37,66 +53,66 @@ function renderCart({ productsById, stockById }) {
     const lineTotal = price * qty;
     subtotal += lineTotal;
 
-    const row = document.createElement("div");
-    row.className = "line";
+    const tr = document.createElement("tr");
 
-    const left = document.createElement("div");
-    left.innerHTML = `<div><a href="./product.html?slug=${encodeURIComponent(p.slug)}">${p.name}</a></div>
-      <div class="muted">${formatRub(price)} · наличие: ${out ? "нет" : `${stock} шт.`}</div>`;
+    const tdName = document.createElement("td");
+    tdName.innerHTML = `<div><a href="./product.html?slug=${encodeURIComponent(p.slug)}">${p.name}</a></div>
+      <div class="tm-text-gray small">Наличие: ${out ? "нет" : `${stock} шт.`}${tooMuch ? " · превышение" : ""}</div>`;
+    tr.appendChild(tdName);
 
+    const tdPrice = document.createElement("td");
+    tdPrice.className = "text-end";
+    tdPrice.textContent = formatRub(price);
+    tr.appendChild(tdPrice);
+
+    const tdQty = document.createElement("td");
+    tdQty.className = "text-center";
     const qtyInput = document.createElement("input");
-    qtyInput.className = "qty";
     qtyInput.type = "number";
     qtyInput.min = "1";
     qtyInput.value = String(qty);
+    qtyInput.className = "form-control form-control-sm d-inline-block";
+    qtyInput.style.width = "90px";
     qtyInput.addEventListener("change", () => {
       setQty(p.id, qtyInput.value);
       updateCartBadge();
-      init(); // перерисовать
+      init();
     });
+    tdQty.appendChild(qtyInput);
+    tr.appendChild(tdQty);
 
-    const right = document.createElement("div");
-    right.style.display = "grid";
-    right.style.justifyItems = "end";
-    right.style.gap = "6px";
+    const tdTotal = document.createElement("td");
+    tdTotal.className = "text-end";
+    tdTotal.textContent = formatRub(lineTotal);
+    tr.appendChild(tdTotal);
 
-    const total = document.createElement("div");
-    total.className = "price";
-    total.textContent = formatRub(lineTotal);
-
+    const tdAct = document.createElement("td");
+    tdAct.className = "text-end";
     const del = document.createElement("button");
-    del.className = "btn btn--ghost";
     del.type = "button";
+    del.className = "btn btn-sm btn-outline-danger";
     del.textContent = "Удалить";
     del.addEventListener("click", () => {
       removeFromCart(p.id);
       updateCartBadge();
       init();
     });
+    tdAct.appendChild(del);
+    tr.appendChild(tdAct);
 
-    const warn = document.createElement("div");
-    warn.className = "muted";
-    warn.style.fontSize = "12px";
-    warn.textContent = out ? "Нет в наличии" : tooMuch ? "Количество больше остатка" : "";
-
-    row.appendChild(left);
-    row.appendChild(qtyInput);
-    right.appendChild(total);
-    right.appendChild(del);
-    if (warn.textContent) right.appendChild(warn);
-    row.appendChild(right);
-    lines.appendChild(row);
+    tbody.appendChild(tr);
   }
 
   wrap.innerHTML = "";
-  wrap.appendChild(lines);
+  tableWrap.appendChild(table);
+  wrap.appendChild(tableWrap);
 
   const summary = document.createElement("div");
-  summary.className = "panel";
-  summary.innerHTML = `<div class="row row--center" style="justify-content:space-between">
-    <div class="muted">Итого (без доставки)</div>
-    <div class="price">${formatRub(subtotal)}</div>
-  </div>`;
+  summary.className = "tm-bg-gray p-4 mt-3";
+  summary.innerHTML = `<div class="d-flex justify-content-between align-items-center">
+      <div class="tm-text-gray">Итого (без доставки)</div>
+      <div class="tm-text-primary h5 mb-0">${formatRub(subtotal)}</div>
+    </div>`;
   wrap.appendChild(summary);
 
   return { subtotal, canCheckout };
@@ -164,5 +180,5 @@ async function init() {
 }
 
 init().catch((e) => {
-  document.getElementById("cart").innerHTML = `<p class="muted">Ошибка: ${e.message}</p>`;
+  document.getElementById("cart").innerHTML = `<p class="tm-text-gray">Ошибка: ${e.message}</p>`;
 });

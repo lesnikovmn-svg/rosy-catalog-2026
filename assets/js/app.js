@@ -71,59 +71,79 @@ function render(products) {
     const qty = Number(state.stockById[String(p.id)]?.quantity ?? 0);
     const out = qty <= 0;
 
-    const card = document.createElement("article");
-    card.className = "card";
+    const col = document.createElement("div");
+    col.className = "col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5";
+
+    const fig = document.createElement("figure");
+    fig.className = "effect-ming tm-video-item";
 
     const img = document.createElement("img");
-    img.className = "card__img";
+    img.src = p.image_url || "";
     img.alt = p.name;
     img.loading = "lazy";
-    img.src = p.image_url || "";
-    card.appendChild(img);
+    img.className = "img-fluid";
+    fig.appendChild(img);
 
-    const body = document.createElement("div");
-    body.className = "card__body";
+    const cap = document.createElement("figcaption");
+    cap.className = "d-flex align-items-center justify-content-center";
 
-    const a = document.createElement("a");
-    a.href = `./product.html?slug=${encodeURIComponent(p.slug)}`;
-    a.className = "card__title";
-    a.textContent = p.name;
-    body.appendChild(a);
+    const h2 = document.createElement("h2");
+    h2.textContent = p.name;
+    cap.appendChild(h2);
 
-    const pills = document.createElement("div");
-    pills.className = "pillrow";
-    for (const t of [p.color, p.height_cm ? `${p.height_cm} см` : "", p.bloom_type, p.is_new ? "новинка" : ""]) {
-      if (!t) continue;
-      const span = document.createElement("span");
-      span.className = "pill";
-      span.textContent = String(t);
-      pills.appendChild(span);
-    }
-    body.appendChild(pills);
+    const more = document.createElement("a");
+    more.href = `./product.html?slug=${encodeURIComponent(p.slug)}`;
+    more.textContent = "Подробнее";
+    cap.appendChild(more);
 
-    const row = document.createElement("div");
-    row.className = "row row--center";
+    fig.appendChild(cap);
+    col.appendChild(fig);
 
-    const price = document.createElement("div");
-    price.className = "price";
-    price.textContent = formatRub(p.price_rub);
-    row.appendChild(price);
+    const meta = document.createElement("div");
+    meta.className = "d-flex justify-content-between tm-text-gray";
 
-    const btn = document.createElement("button");
-    btn.className = "btn btn--ghost";
-    btn.textContent = out ? "Нет в наличии" : "В корзину";
-    btn.disabled = out;
-    btn.addEventListener("click", () => {
+    const left = document.createElement("span");
+    left.className = "tm-text-gray-light";
+    left.textContent = out ? "Нет в наличии" : `В наличии: ${qty} шт.`;
+    meta.appendChild(left);
+
+    const right = document.createElement("span");
+    right.textContent = formatRub(p.price_rub);
+    meta.appendChild(right);
+
+    col.appendChild(meta);
+
+    const actions = document.createElement("div");
+    actions.className = "mt-2 d-flex gap-2";
+
+    const add = document.createElement("button");
+    add.className = "btn btn-sm btn-primary";
+    add.type = "button";
+    add.disabled = out;
+    add.textContent = out ? "Нет" : "В корзину";
+    add.addEventListener("click", () => {
       addToCart(p.id, 1);
       updateCartBadge();
-      btn.textContent = "Добавлено";
-      window.setTimeout(() => (btn.textContent = "В корзину"), 900);
+      add.textContent = "Добавлено";
+      window.setTimeout(() => (add.textContent = "В корзину"), 900);
     });
-    row.appendChild(btn);
+    actions.appendChild(add);
 
-    body.appendChild(row);
-    card.appendChild(body);
-    grid.appendChild(card);
+    const tags = [];
+    if (p.color) tags.push(String(p.color));
+    if (p.height_cm) tags.push(`${p.height_cm} см`);
+    if (p.bloom_type) tags.push(String(p.bloom_type));
+    if (p.is_new) tags.push("новинка");
+
+    if (tags.length) {
+      const small = document.createElement("small");
+      small.className = "tm-text-gray ml-2 align-self-center";
+      small.textContent = tags.join(" · ");
+      actions.appendChild(small);
+    }
+
+    col.appendChild(actions);
+    grid.appendChild(col);
   }
 
   const status = document.getElementById("status");
@@ -177,4 +197,3 @@ async function init() {
 }
 
 init();
-

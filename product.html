@@ -1,67 +1,134 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Товар</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="container topbar__row">
-        <a class="brand" href="./index.html">Розы</a>
-        <nav class="nav">
-          <a href="./index.html">Каталог</a>
-          <a href="./cart.html">Корзина <span id="cartCount" class="badge" hidden></span></a>
-        </nav>
-      </div>
-    </header>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="css/templatemo-style.css">
+</head>
+<body>
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
 
-    <main class="container">
-      <p class="breadcrumbs"><a href="./index.html">Каталог</a> / <span id="crumb">Товар</span></p>
-      <section id="product" class="product"></section>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-seedling mr-2"></i>
+                ROS
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-1" href="index.html">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-4 position-relative" href="cart.html">
+                            Корзина
+                            <span id="cartCount" class="badge rounded-pill bg-danger" hidden></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-      <section class="panel">
-        <h2>Оставить отзыв</h2>
-        <p class="muted">Отзыв появится на сайте после модерации.</p>
-        <form id="reviewForm" class="form" autocomplete="on">
-          <div class="row">
-            <label class="field">
-              <span>Имя</span>
-              <input name="author_name" required />
-            </label>
-            <label class="field">
-              <span>Email</span>
-              <input name="author_email" type="email" required />
-            </label>
-          </div>
-          <label class="field">
-            <span>Оценка</span>
-            <select name="rating" required>
-              <option value="5">5</option>
-              <option value="4">4</option>
-              <option value="3">3</option>
-              <option value="2">2</option>
-              <option value="1">1</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Текст</span>
-            <textarea name="text" rows="4" required></textarea>
-          </label>
-          <button class="btn" type="submit">Отправить</button>
-          <p id="reviewStatus" class="muted" role="status"></p>
-        </form>
-      </section>
-    </main>
+    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg"></div>
 
-    <footer class="footer">
-      <div class="container">
-        <span class="muted">© Каталог роз</span>
-      </div>
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <div class="row mb-4">
+            <h2 class="col-12 tm-text-primary" id="productTitle">Товар</h2>
+        </div>
+
+        <div class="row tm-mb-90">
+            <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
+                <img id="productImage" src="" alt="Image" class="img-fluid">
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
+                <div class="tm-bg-gray tm-video-details">
+                    <p id="productDesc" class="mb-4"></p>
+
+                    <div class="mb-4 d-flex flex-wrap">
+                        <div class="mr-4 mb-2">
+                            <span class="tm-text-gray-dark">Цена: </span><span id="productPrice" class="tm-text-primary"></span>
+                        </div>
+                        <div class="mr-4 mb-2">
+                            <span class="tm-text-gray-dark">Наличие: </span><span id="productStock" class="tm-text-primary"></span>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-4">
+                        <button id="addToCartBtn" type="button" class="btn btn-primary tm-btn-big">В корзину</button>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="tm-text-gray-dark mb-3">Характеристики</h3>
+                        <div id="productKv" class="tm-text-gray"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <h2 class="col-12 tm-text-primary">Оставить отзыв</h2>
+            <p class="col-12 tm-text-gray">Отзыв появится на сайте после модерации.</p>
+        </div>
+
+        <div class="row tm-mb-50">
+            <div class="col-lg-6 col-12 mb-5">
+                <form id="reviewForm" class="tm-contact-form mx-auto" autocomplete="on">
+                    <div class="form-group">
+                        <input type="text" name="author_name" class="form-control rounded-0" placeholder="Имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="author_email" class="form-control rounded-0" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <select name="rating" class="form-control rounded-0" required>
+                            <option value="5">Оценка: 5</option>
+                            <option value="4">Оценка: 4</option>
+                            <option value="3">Оценка: 3</option>
+                            <option value="2">Оценка: 2</option>
+                            <option value="1">Оценка: 1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="6" name="text" class="form-control rounded-0" placeholder="Текст отзыва" required></textarea>
+                    </div>
+                    <div class="form-group tm-text-right">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                    <p id="reviewStatus" class="tm-text-gray" role="status"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
+        <div class="container-fluid tm-container-small">
+            <div class="row">
+                <div class="col-12 px-5 mb-3">
+                    Каталог саженцев роз на весну 2026
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <script src="js/plugins.js"></script>
+    <script>
+        $(window).on("load", function() {
+            $('body').addClass('loaded');
+        });
+    </script>
     <script type="module" src="assets/js/product.js"></script>
-  </body>
+</body>
 </html>
-

@@ -3,72 +3,56 @@ import { addToCart } from "./cart.js";
 import { formatRub, getParam, updateCartBadge } from "./ui.js";
 
 function renderProduct(p, stockById) {
-  const wrap = document.getElementById("product");
   const qty = Number(stockById[String(p.id)]?.quantity ?? 0);
   const out = qty <= 0;
 
   document.title = `${p.name} — Каталог роз`;
-  document.getElementById("crumb").textContent = p.name;
+  const title = document.getElementById("productTitle");
+  title.textContent = p.name;
 
-  wrap.innerHTML = "";
-
-  const img = document.createElement("img");
-  img.className = "product__img";
-  img.alt = p.name;
+  const img = document.getElementById("productImage");
   img.src = p.image_url || "";
+  img.alt = p.name;
 
-  const box = document.createElement("div");
-  box.className = "product__box";
-
-  const h = document.createElement("h1");
-  h.textContent = p.name;
-  box.appendChild(h);
-
-  const desc = document.createElement("p");
-  desc.className = "muted";
+  const desc = document.getElementById("productDesc");
   desc.textContent = p.description || "";
-  box.appendChild(desc);
 
-  const price = document.createElement("div");
-  price.className = "price";
+  const price = document.getElementById("productPrice");
   price.textContent = formatRub(p.price_rub);
-  box.appendChild(price);
 
-  const kv = document.createElement("div");
-  kv.className = "kv";
+  const stock = document.getElementById("productStock");
+  stock.textContent = out ? "нет" : `${qty} шт.`;
+
+  const kv = document.getElementById("productKv");
+  kv.innerHTML = "";
   const rows = [
     ["Цвет", p.color],
     ["Высота", p.height_cm ? `${p.height_cm} см` : ""],
     ["Тип цветения", p.bloom_type],
-    ["Наличие", out ? "нет" : `${qty} шт.`],
-  ];
-  for (const [k, v] of rows) {
-    const a = document.createElement("span");
-    a.textContent = k;
-    const b = document.createElement("div");
-    b.textContent = v || "—";
-    kv.appendChild(a);
-    kv.appendChild(b);
-  }
-  box.appendChild(kv);
+  ].filter(([, v]) => Boolean(v));
 
-  const row = document.createElement("div");
-  row.className = "row row--center";
-  const btn = document.createElement("button");
-  btn.className = "btn";
-  btn.textContent = out ? "Нет в наличии" : "Добавить в корзину";
+  if (!rows.length) {
+    kv.textContent = "—";
+  } else {
+    const ul = document.createElement("ul");
+    ul.className = "pl-3 mb-0";
+    for (const [k, v] of rows) {
+      const li = document.createElement("li");
+      li.textContent = `${k}: ${v}`;
+      ul.appendChild(li);
+    }
+    kv.appendChild(ul);
+  }
+
+  const btn = document.getElementById("addToCartBtn");
   btn.disabled = out;
-  btn.addEventListener("click", () => {
+  btn.textContent = out ? "Нет в наличии" : "В корзину";
+  btn.onclick = () => {
     addToCart(p.id, 1);
     updateCartBadge();
     btn.textContent = "Добавлено";
-    window.setTimeout(() => (btn.textContent = "Добавить в корзину"), 900);
-  });
-  row.appendChild(btn);
-  box.appendChild(row);
-
-  wrap.appendChild(img);
-  wrap.appendChild(box);
+    window.setTimeout(() => (btn.textContent = "В корзину"), 900);
+  };
 
   const form = document.getElementById("reviewForm");
   form.dataset.productId = String(p.id);
@@ -77,22 +61,21 @@ function renderProduct(p, stockById) {
 async function init() {
   updateCartBadge();
   const slug = getParam("slug");
-  const wrap = document.getElementById("product");
   if (!slug) {
-    wrap.textContent = "Не указан товар (slug).";
+    document.getElementById("productTitle").textContent = "Не указан товар";
     return;
   }
 
   try {
-    wrap.textContent = "Загрузка…";
+    document.getElementById("productTitle").textContent = "Загрузка…";
     const { product, stockById } = await fetchProductBySlug(slug);
     if (!product) {
-      wrap.textContent = "Товар не найден.";
+      document.getElementById("productTitle").textContent = "Товар не найден.";
       return;
     }
     renderProduct(product, stockById);
   } catch (e) {
-    wrap.textContent = `Ошибка: ${e.message}`;
+    document.getElementById("productTitle").textContent = `Ошибка: ${e.message}`;
   }
 
   const form = document.getElementById("reviewForm");
@@ -122,4 +105,3 @@ async function init() {
 }
 
 init();
-
