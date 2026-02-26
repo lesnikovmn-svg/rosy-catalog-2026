@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="720" viewBox="0 0 1920 720" role="img" aria-label="Каталог роз — фон">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b3d3a"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="20%" r="70%">
+      <stop offset="0" stop-color="#ff4d6d" stop-opacity="0.35"/>
+      <stop offset="0.55" stop-color="#ff4d6d" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#ff4d6d" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="0.6"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="720" fill="url(#g1)"/>
+  <rect width="1920" height="720" fill="url(#glow)"/>
+  <rect width="1920" height="720" fill="url(#dots)"/>
+
+  <!-- abstract petals -->
+  <g opacity="0.22" filter="url(#soft)">
+    <path d="M1500 70c110 20 200 90 210 170 10 80-55 155-165 205-110 50-230 40-320-20-90-60-120-160-60-235 60-75 225-140 335-120z"
+          fill="#ff4d6d"/>
+    <path d="M520 470c160-60 330-10 390 100 60 110-10 240-160 290-150 50-320 5-390-105-70-110 0-225 160-285z"
+          fill="#34d399"/>
+  </g>
+
+  <!-- minimal rose line art -->
+  <g stroke="#ffffff" stroke-opacity="0.22" fill="none" stroke-width="4">
+    <path d="M260 560c30-60 85-95 150-95 70 0 130 40 155 105 25 65 10 130-35 175-45 45-105 55-165 35" />
+    <path d="M335 635c35-40 85-55 120-35 35 20 45 65 20 105-25 40-70 55-110 40" />
+    <path d="M1570 520c25-55 75-90 140-95 75-5 145 35 170 105 25 70 0 140-55 185-55 45-125 50-190 20" />
+    <path d="M1640 600c35-40 90-50 125-25 35 25 35 80 0 120-35 40-95 50-135 25" />
+  </g>
+
+  <!-- title zone shadow for readability -->
+  <g opacity="0.35">
+    <rect x="0" y="0" width="1920" height="220" fill="#000000"/>
+  </g>
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="#ffffff">
+    <text x="120" y="110" font-size="54" font-weight="800" letter-spacing="0.3px">Каталог роз 2026</text>
+    <text x="120" y="165" font-size="22" opacity="0.85">Подбор сортов · Наличие · Заказ в WhatsApp/Telegram</text>
+  </g>
+</svg>
+
