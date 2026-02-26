@@ -1,6 +1,6 @@
 import { fetchProductBySlug, submitReviewViaHiddenForm } from "./api.js";
 import { addToCart } from "./cart.js";
-import { formatRub, getParam, updateCartBadge } from "./ui.js";
+import { buildTelegramUrl, buildWhatsAppUrl, formatRub, getParam, updateCartBadge } from "./ui.js";
 
 function renderProduct(p, stockById) {
   const qty = Number(stockById[String(p.id)]?.quantity ?? 0);
@@ -57,6 +57,15 @@ function renderProduct(p, stockById) {
     btn.textContent = "Добавлено";
     window.setTimeout(() => (btn.textContent = "В корзину"), 900);
   };
+
+  const productUrl = new URL(`./product.html?slug=${encodeURIComponent(p.slug)}`, window.location.href).toString();
+  const orderText = `Хочу заказать ${p.name} (весна 2026)\n${productUrl}`;
+
+  const wa = document.getElementById("orderWhatsApp");
+  wa.href = buildWhatsAppUrl({ text: orderText });
+
+  const tg = document.getElementById("orderTelegram");
+  tg.href = buildTelegramUrl({ text: orderText, url: productUrl });
 
   const form = document.getElementById("reviewForm");
   form.dataset.productId = String(p.id);

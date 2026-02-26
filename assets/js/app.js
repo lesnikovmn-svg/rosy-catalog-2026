@@ -1,6 +1,6 @@
 import { fetchCatalog } from "./api.js";
 import { addToCart } from "./cart.js";
-import { formatRub, updateCartBadge } from "./ui.js";
+import { buildTelegramUrl, buildWhatsAppUrl, formatRub, updateCartBadge } from "./ui.js";
 
 const state = {
   products: [],
@@ -144,6 +144,25 @@ function render(products) {
       window.setTimeout(() => (add.textContent = "В корзину"), 900);
     });
     actions.appendChild(add);
+
+    const productUrl = new URL(`./product.html?slug=${encodeURIComponent(p.slug)}`, window.location.href).toString();
+    const orderText = `Хочу заказать ${p.name} (весна 2026)\n${productUrl}`;
+
+    const wa = document.createElement("a");
+    wa.className = "btn btn-sm btn-success ml-2";
+    wa.href = buildWhatsAppUrl({ text: orderText });
+    wa.target = "_blank";
+    wa.rel = "noopener";
+    wa.innerHTML = `<i class="fab fa-whatsapp mr-1"></i> WhatsApp`;
+    actions.appendChild(wa);
+
+    const tg = document.createElement("a");
+    tg.className = "btn btn-sm btn-outline-primary ml-2";
+    tg.href = buildTelegramUrl({ text: orderText, url: productUrl });
+    tg.target = "_blank";
+    tg.rel = "noopener";
+    tg.innerHTML = `<i class="fab fa-telegram mr-1"></i> Telegram`;
+    actions.appendChild(tg);
 
     col.appendChild(actions);
     grid.appendChild(col);
