@@ -1,0 +1,37 @@
+:root {
+  --rosy-wa: #25d366;
+}
+
+.rosy-cta {
+  border-radius: 10px;
+}
+
+.rosy-cta__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.rosy-cta__buttons .btn {
+  min-width: 220px;
+}
+
+.rosy-btn-wa {
+  background: var(--rosy-wa);
+  border-color: var(--rosy-wa);
+}
+
+.rosy-btn-wa:hover {
+  background: #20bd5b;
+  border-color: #20bd5b;
+}
+
+@media (max-width: 520px) {
+  .rosy-cta__buttons .btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
