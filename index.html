@@ -106,9 +106,18 @@
 
     <script src="js/plugins.js"></script>
     <script>
-        $(window).on("load", function() {
-            $('body').addClass('loaded');
+        // Быстрее убираем лоадер: не ждём загрузку всех картинок/шрифтов.
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.classList.add("loaded");
         });
+        // Фолбэк на случай, если DOMContentLoaded уже прошёл.
+        window.addEventListener("load", function () {
+            document.body.classList.add("loaded");
+        });
+        // Последний фолбэк, чтобы лоадер не “зависал”.
+        window.setTimeout(function () {
+            document.body.classList.add("loaded");
+        }, 2500);
     </script>
     <script type="module" src="assets/js/app.js"></script>
 </body>

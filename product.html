@@ -125,9 +125,15 @@
 
     <script src="js/plugins.js"></script>
     <script>
-        $(window).on("load", function() {
-            $('body').addClass('loaded');
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.classList.add("loaded");
         });
+        window.addEventListener("load", function () {
+            document.body.classList.add("loaded");
+        });
+        window.setTimeout(function () {
+            document.body.classList.add("loaded");
+        }, 2500);
     </script>
     <script type="module" src="assets/js/product.js"></script>
 </body>
