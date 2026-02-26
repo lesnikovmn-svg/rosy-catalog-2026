@@ -100,11 +100,11 @@ function render(products) {
     col.appendChild(fig);
 
     const meta = document.createElement("div");
-    meta.className = "d-flex justify-content-between tm-text-gray";
+    meta.className = "d-flex justify-content-between tm-text-gray mt-2";
 
     const left = document.createElement("span");
     left.className = "tm-text-gray-light";
-    left.textContent = out ? "Нет в наличии" : `В наличии: ${qty} шт.`;
+    left.textContent = p.name;
     meta.appendChild(left);
 
     const right = document.createElement("span");
@@ -113,8 +113,20 @@ function render(products) {
 
     col.appendChild(meta);
 
+    const tags = [];
+    if (p.color) tags.push(String(p.color));
+    if (p.height_cm) tags.push(`${p.height_cm} см`);
+    if (p.bloom_type) tags.push(String(p.bloom_type));
+    if (p.is_new) tags.push("новинка");
+
+    const sub = document.createElement("div");
+    sub.className = "tm-text-gray small";
+    const stockText = out ? "Нет в наличии" : `В наличии: ${qty} шт.`;
+    sub.textContent = tags.length ? `${stockText} · ${tags.join(" · ")}` : stockText;
+    col.appendChild(sub);
+
     const actions = document.createElement("div");
-    actions.className = "mt-2 d-flex gap-2";
+    actions.className = "mt-2 d-flex align-items-center";
 
     const add = document.createElement("button");
     add.className = "btn btn-sm btn-primary";
@@ -128,19 +140,6 @@ function render(products) {
       window.setTimeout(() => (add.textContent = "В корзину"), 900);
     });
     actions.appendChild(add);
-
-    const tags = [];
-    if (p.color) tags.push(String(p.color));
-    if (p.height_cm) tags.push(`${p.height_cm} см`);
-    if (p.bloom_type) tags.push(String(p.bloom_type));
-    if (p.is_new) tags.push("новинка");
-
-    if (tags.length) {
-      const small = document.createElement("small");
-      small.className = "tm-text-gray ml-2 align-self-center";
-      small.textContent = tags.join(" · ");
-      actions.appendChild(small);
-    }
 
     col.appendChild(actions);
     grid.appendChild(col);
