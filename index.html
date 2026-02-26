@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Каталог роз</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__row">
+        <a class="brand" href="./index.html">Розы</a>
+        <nav class="nav">
+          <a href="./index.html" aria-current="page">Каталог</a>
+          <a href="./cart.html">Корзина <span id="cartCount" class="badge" hidden></span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Онлайн‑каталог роз</h1>
+        <p class="muted">
+          Поиск по сортам, фильтры по параметрам и быстрая корзина. Заказ отправляется в таблицу и на email.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="filters">
+          <label class="field">
+            <span>Поиск</span>
+            <input id="q" type="search" placeholder="Например: Red Naomi" />
+          </label>
+
+          <label class="field">
+            <span>Цвет</span>
+            <select id="color">
+              <option value="">Любой</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Высота, см</span>
+            <div class="range">
+              <input id="hMin" type="number" inputmode="numeric" placeholder="от" min="0" />
+              <span class="muted">—</span>
+              <input id="hMax" type="number" inputmode="numeric" placeholder="до" min="0" />
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Тип цветения</span>
+            <select id="bloomType">
+              <option value="">Любой</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Сортировка</span>
+            <select id="sort">
+              <option value="popularity_desc">Популярные</option>
+              <option value="new_desc">Новинки</option>
+              <option value="price_asc">Цена ↑</option>
+              <option value="price_desc">Цена ↓</option>
+              <option value="name_asc">Название A‑Я</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="grid" id="grid" aria-live="polite"></section>
+
+      <p id="status" class="muted" role="status"></p>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="muted">© Каталог роз</span>
+      </div>
+    </footer>
+
+    <script type="module" src="assets/js/app.js"></script>
+  </body>
+</html>
+

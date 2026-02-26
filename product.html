@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Товар</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__row">
+        <a class="brand" href="./index.html">Розы</a>
+        <nav class="nav">
+          <a href="./index.html">Каталог</a>
+          <a href="./cart.html">Корзина <span id="cartCount" class="badge" hidden></span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <p class="breadcrumbs"><a href="./index.html">Каталог</a> / <span id="crumb">Товар</span></p>
+      <section id="product" class="product"></section>
+
+      <section class="panel">
+        <h2>Оставить отзыв</h2>
+        <p class="muted">Отзыв появится на сайте после модерации.</p>
+        <form id="reviewForm" class="form" autocomplete="on">
+          <div class="row">
+            <label class="field">
+              <span>Имя</span>
+              <input name="author_name" required />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input name="author_email" type="email" required />
+            </label>
+          </div>
+          <label class="field">
+            <span>Оценка</span>
+            <select name="rating" required>
+              <option value="5">5</option>
+              <option value="4">4</option>
+              <option value="3">3</option>
+              <option value="2">2</option>
+              <option value="1">1</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Текст</span>
+            <textarea name="text" rows="4" required></textarea>
+          </label>
+          <button class="btn" type="submit">Отправить</button>
+          <p id="reviewStatus" class="muted" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="muted">© Каталог роз</span>
+      </div>
+    </footer>
+
+    <script type="module" src="assets/js/product.js"></script>
+  </body>
+</html>
+

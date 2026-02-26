@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Корзина</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar__row">
+        <a class="brand" href="./index.html">Розы</a>
+        <nav class="nav">
+          <a href="./index.html">Каталог</a>
+          <a href="./cart.html" aria-current="page">Корзина <span id="cartCount" class="badge" hidden></span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Корзина</h1>
+
+      <section id="cart" class="panel"></section>
+
+      <section class="panel">
+        <h2>Оформление заказа</h2>
+        <p class="muted">Доставка и скидки пока рассчитываются вручную (заглушка).</p>
+
+        <form id="checkoutForm" class="form" autocomplete="on">
+          <div class="row">
+            <label class="field">
+              <span>Имя</span>
+              <input name="customer_name" required />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input name="email" type="email" required />
+            </label>
+          </div>
+          <div class="row">
+            <label class="field">
+              <span>Телефон</span>
+              <input name="phone" inputmode="tel" required />
+            </label>
+            <label class="field">
+              <span>Адрес доставки</span>
+              <input name="address" required />
+            </label>
+          </div>
+          <label class="field">
+            <span>Комментарий</span>
+            <textarea name="comment" rows="3"></textarea>
+          </label>
+
+          <div class="row row--center">
+            <button class="btn" type="submit">Отправить заказ</button>
+            <a class="btn btn--ghost" href="./index.html">Продолжить покупки</a>
+          </div>
+          <p id="checkoutStatus" class="muted" role="status"></p>
+        </form>
+
+        <iframe title="order-submit" id="orderFrame" name="orderFrame" class="hidden"></iframe>
+        <form id="orderPostForm" class="hidden" method="POST" target="orderFrame">
+          <input type="hidden" name="action" value="order" />
+          <input type="hidden" name="payload" value="" />
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="muted">© Каталог роз</span>
+      </div>
+    </footer>
+
+    <script type="module" src="assets/js/cartPage.js"></script>
+  </body>
+</html>
+

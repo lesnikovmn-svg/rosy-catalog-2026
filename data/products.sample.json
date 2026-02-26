@@ -1,0 +1,48 @@
+[
+  {
+    "id": "1",
+    "slug": "red-naomi",
+    "name": "Red Naomi",
+    "description": "Классическая крупная красная роза для букетов.",
+    "price_rub": 350,
+    "currency": "RUB",
+    "color": "красный",
+    "height_cm": 120,
+    "bloom_type": "повторное",
+    "is_active": 1,
+    "is_new": 1,
+    "popularity": 95,
+    "image_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=60"
+  },
+  {
+    "id": "2",
+    "slug": "white-ohara",
+    "name": "White O'Hara",
+    "description": "Нежная белая (кремовая) роза с ароматом.",
+    "price_rub": 390,
+    "currency": "RUB",
+    "color": "белый",
+    "height_cm": 110,
+    "bloom_type": "повторное",
+    "is_active": 1,
+    "is_new": 0,
+    "popularity": 80,
+    "image_url": "https://images.unsplash.com/photo-1526045478516-99145907023c?auto=format&fit=crop&w=1200&q=60"
+  },
+  {
+    "id": "3",
+    "slug": "pink-spray",
+    "name": "Pink Spray",
+    "description": "Спрей‑роза для композиций и бордюров.",
+    "price_rub": 290,
+    "currency": "RUB",
+    "color": "розовый",
+    "height_cm": 80,
+    "bloom_type": "непрерывное",
+    "is_active": 1,
+    "is_new": 0,
+    "popularity": 70,
+    "image_url": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=60"
+  }
+]
+
