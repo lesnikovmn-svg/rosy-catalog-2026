@@ -78,10 +78,14 @@ function render(products) {
     fig.className = "effect-ming tm-video-item";
 
     const img = document.createElement("img");
-    img.src = p.image_url || "";
+    img.src = p.image_url || `./images/${encodeURIComponent(p.slug)}-1.jpg`;
     img.alt = p.name;
     img.loading = "lazy";
     img.className = "img-fluid";
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = "./images/placeholder.jpg";
+    };
     fig.appendChild(img);
 
     const cap = document.createElement("figcaption");

@@ -11,8 +11,12 @@ function renderProduct(p, stockById) {
   title.textContent = p.name;
 
   const img = document.getElementById("productImage");
-  img.src = p.image_url || "";
+  img.src = p.image_url || `./images/${encodeURIComponent(p.slug)}-1.jpg`;
   img.alt = p.name;
+  img.onerror = () => {
+    img.onerror = null;
+    img.src = "./images/placeholder.jpg";
+  };
 
   const desc = document.getElementById("productDesc");
   desc.textContent = p.description || "";

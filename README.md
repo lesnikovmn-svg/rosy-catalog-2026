@@ -32,6 +32,9 @@ python3 -m http.server 5173
 
 `id,slug,name,description,price_rub,currency,color,height_cm,bloom_type,is_active,is_new,popularity,image_url,updated_at`
 
+Примечания:
+- `image_url` можно оставить пустым — тогда сайт попробует взять локальное фото `images/<slug>-1.jpg` и, если не найдёт, покажет `images/placeholder.jpg`.
+
 **Stock**
 
 `product_id,quantity,low_stock_threshold,updated_at`
