@@ -15,7 +15,12 @@ export async function fetchCatalog() {
   }
 
   const url = `${APPS_SCRIPT_URL}?action=catalog&_ts=${Date.now()}`;
-  return jsonp(url);
+  try {
+    return await jsonp(url, { timeoutMs: 20000 });
+  } catch (e) {
+    if (USE_LOCAL_SAMPLE_DATA_WHEN_NO_API) return loadLocalSample();
+    throw e;
+  }
 }
 
 export async function fetchProductBySlug(slug) {
