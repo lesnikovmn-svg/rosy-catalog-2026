@@ -4,7 +4,7 @@ export function jsonp(url, { timeoutMs = 12000 } = {}) {
     const script = document.createElement("script");
     const timer = window.setTimeout(() => {
       cleanup();
-      reject(new Error("JSONP timeout"));
+      reject(new Error(`JSONP timeout: ${url}`));
     }, timeoutMs);
 
     function cleanup() {
@@ -22,10 +22,9 @@ export function jsonp(url, { timeoutMs = 12000 } = {}) {
     script.src = `${url}${sep}callback=${encodeURIComponent(callbackName)}`;
     script.onerror = () => {
       cleanup();
-      reject(new Error("JSONP load error"));
+      reject(new Error(`JSONP load error: ${url}`));
     };
 
     document.head.appendChild(script);
   });
 }
-

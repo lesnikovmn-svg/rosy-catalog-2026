@@ -14,7 +14,7 @@ export async function fetchCatalog() {
     throw new Error("Не настроен APPS_SCRIPT_URL");
   }
 
-  const url = `${APPS_SCRIPT_URL}?action=catalog`;
+  const url = `${APPS_SCRIPT_URL}?action=catalog&_ts=${Date.now()}`;
   return jsonp(url);
 }
 
